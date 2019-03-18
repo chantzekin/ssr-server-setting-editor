@@ -3,7 +3,7 @@
 import axios from 'axios'
 
 const request = axios.create({
-  baseURL: 'http://127.0.0.1:7070'
+  baseURL: 'http://65.49.193.118:7070'
 })
 
 export const fetchUsers = () => {
