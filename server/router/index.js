@@ -1,6 +1,5 @@
 // server/router.js
 
-const serve = require('koa-static')
 const router = require('koa-router')()
 
 const {
