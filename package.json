@@ -1,0 +1,21 @@
+{
+  "name": "ssr-server-setting-editor",
+  "version": "1.0.0",
+  "description": "Edit shadowsocks.json file on client side by web gui",
+  "main": "index.js",
+  "author": "z",
+  "license": "MIT",
+  "scripts": {
+    "start": "cd site && yarn serve",
+    "server": "nodemon ./server/app.js"
+  },
+  "dependencies": {
+    "jsonfile": "^5.0.0",
+    "kcors": "^2.2.2",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.11",
+    "nodemon": "^1.18.10"
+  }
+}
