@@ -3,12 +3,11 @@
 import axios from 'axios'
 
 axios.defaults.timeout = 15000
-axios.defaults.baseURL = 'http://localhost:7070'
+axios.defaults.baseURL = 'http://65.49.193.118:7070'
 
 axios.interceptors.response.use(
   response => response,
   error => {
-    console.log(error.response)
     return Promise.reject(error.response)
   }
 )
