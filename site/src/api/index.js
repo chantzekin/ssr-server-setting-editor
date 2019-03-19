@@ -2,22 +2,33 @@
 
 import axios from 'axios'
 
-const request = axios.create({
-  baseURL: 'http://localhost:7070'
-})
+axios.defaults.timeout = 15000
+axios.defaults.baseURL = 'http://localhost:7070'
+
+axios.interceptors.response.use(
+  response => response,
+  error => {
+    console.log(error.response)
+    return Promise.reject(error.response)
+  }
+)
 
 export const fetchUsers = () => {
-  return request.get('/api/users')
+  return axios.get('/api/users')
 }
 
 export const createUser = (data) => {
-  return request.post('/api/users', data)
+  return axios.post('/api/users', data)
 }
 
 export const updateUser = (id, data) => {
-  return request.put(`/api/users/${id}`, data)
+  return axios.put(`/api/users/${id}`, data)
 }
 
 export const deleteUser = (id) => {
-  return request.delete(`/api/users/${id}`)
+  return axios.delete(`/api/users/${id}`)
+}
+
+export const callAction = (action) => {
+  return axios.post(`/api/call/${action}`)
 }

@@ -15,7 +15,7 @@ router.post('/api/users', createUser)
 router.put('/api/users/:port', updateUser)
 router.delete('/api/users/:port', deleteUser)
 
-router.get('/api/call/:action', dispatchAction)
+router.post('/api/call/:action', dispatchAction)
 
 
 

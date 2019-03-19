@@ -15,7 +15,7 @@
 
               <v-dialog v-model="dialog" max-width="500px">
                 <template v-slot:activator="{ on }">
-                  <v-btn v-on="on" icon>
+                  <v-btn @click="restart" icon>
                     <v-icon>autorenew</v-icon>
                   </v-btn>
                   <v-btn v-on="on" icon>
@@ -183,6 +183,21 @@ export default {
       this.dialog = false
       this.editedUser = { ...this.defaultUser }
       this.editedIndex = -1
+    },
+
+    restart () {
+      Api
+        .callAction('restart-ssr')
+        .then(() => {
+          this.snack = true
+          this.snackColor = 'success'
+          this.snackText = 'Restarted'
+        })
+        .catch(err => {
+          this.snack = true
+          this.snackColor = 'error'
+          this.snackText = err.data.msg
+        })
     }
   }
 }
