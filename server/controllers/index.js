@@ -7,6 +7,10 @@ const config = require('../config')
 const readFile = async () =>  await jsonfile.readFile(config.settingFilePath)
 const writeFile = async (obj) => await jsonfile.writeFile(config.settingFilePath, obj, { spaces: 2 })
 
+const cmds = {
+  'restart-ssr': '/etc/init.d/shadowsocks restart'
+}
+
 exports.getUsers = async (ctx) => {
   const setting = await readFile()
   const users = setting['port_password']
@@ -69,4 +73,33 @@ exports.deleteUser = async (ctx) => {
   ctx.body = null
 }
 
-exports.dispatchAction = async (ctx) => {}
+exports.dispatchAction = async (ctx) => {
+  const { action } = ctx.params
+  const cmd = cmds[action]
+  let result = { code: 200, msg: 'Done' }
+
+  if (!cmd) ctx.throw(404, 'Action not found')
+
+  try {
+    await exec(cmd)
+  } catch (e) {
+    ctx.throw(e.message)
+  }
+
+  ctx.body = result
+}
+
+function exec (cmd) {
+  const process = require('child_process')
+
+  return new Promise ((resolve, reject) => {
+    process.exec(cmd, (err, stdout, stderr) => {
+      if (err) {
+        reject(err)
+        return
+      }
+
+      resolve(stdout.trim())
+    })
+  })
+}
